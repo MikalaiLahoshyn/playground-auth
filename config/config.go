@@ -18,13 +18,11 @@ type PostgresDatabase struct {
 }
 
 type Config struct {
-	PostgresDb PostgresDatabase `mapstructure:"DB_DRIVER"`
+	PostgresDb PostgresDatabase `mapstructure:"POSTGRES_DB"`
 }
 
 func LoadConfig(path string) (Config, error) {
-	var (
-		postgresDb PostgresDatabase
-	)
+	config := Config{}
 
 	viper.AddConfigPath(path)
 	viper.SetConfigName("config")
@@ -36,14 +34,6 @@ func LoadConfig(path string) (Config, error) {
 	err := viper.ReadInConfig()
 	if err != nil {
 		return Config{}, err
-	}
-
-	if err = viper.Unmarshal(&postgresDb); err != nil {
-		return Config{}, err
-	}
-
-	config := Config{
-		PostgresDb: postgresDb,
 	}
 
 	if err = viper.Unmarshal(&config); err != nil {

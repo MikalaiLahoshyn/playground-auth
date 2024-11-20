@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"time"
 
+	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -27,7 +28,7 @@ func handlePostgresError(name string, err error) error {
 }
 
 func OpenDB(cfg configs.PostgresDatabase) (*sqlx.DB, error) {
-	connectionString := fmt.Sprintf("%s:%s@(%s:%s)/%s?parseTime=true", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Name)
+	connectionString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Name)
 
 	db, err := sqlx.Connect(cfg.Driver, connectionString)
 	if err != nil {

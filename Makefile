@@ -1,7 +1,13 @@
 DB_URL=postgres://root:root_password@localhost:5432/auth_db?sslmode=disable
 
-# Docker section
+# Run app
+
 run:
+	@go run cmd/main.go
+
+# Docker section
+
+deploy-dbs:
 	@docker compose up
 
 clear-containers:
@@ -9,6 +15,7 @@ clear-containers:
 
 clear-postgres-volume:
 	@docker volume rm auth_postgres_data
+
 
 # Postgres migrations and seed section
 
