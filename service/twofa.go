@@ -1,6 +1,20 @@
 package service
 
-import "github.com/pquerna/otp/totp"
+import (
+	"auth/repository/postgres"
+
+	"github.com/pquerna/otp/totp"
+)
+
+type twoFAService struct {
+	postgresRepo *postgres.Repository
+}
+
+func NewTwoFAService(postgresRepo *postgres.Repository) TwoFAService {
+	return &twoFAService{
+		postgresRepo: postgresRepo,
+	}
+}
 
 //TODO: store secret in redis with TTL 30 seconds
 //Possible options:
