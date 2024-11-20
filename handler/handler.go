@@ -6,7 +6,7 @@ import (
 )
 
 type Handler struct {
-	jwtService   service.JWTService
+	userService  service.UserService
 	oAuthService service.OAuthService
 	twoFAService service.TwoFAService
 	logger       logging.Logger
@@ -24,9 +24,9 @@ func NewHandler(logger logging.Logger, options ...func(*Handler)) *Handler {
 	return handler
 }
 
-func WithJWTServiceService(service service.JWTService) func(*Handler) {
+func WithUserService(service service.UserService) func(*Handler) {
 	return func(handler *Handler) {
-		handler.jwtService = service
+		handler.userService = service
 	}
 }
 

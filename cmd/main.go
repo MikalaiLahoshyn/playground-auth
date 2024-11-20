@@ -66,7 +66,7 @@ func run(ctx context.Context) error {
 		postgres.WithDB(db),
 	)
 
-	jwtService := service.NewJWTService(repo)
+	userService := service.NewUserService(repo)
 	oAuthService := service.NewOAuthService(repo)
 	twoFAService := service.NewTwoFAService(repo)
 
@@ -74,7 +74,7 @@ func run(ctx context.Context) error {
 
 	handler := handler.NewHandler(
 		logger,
-		handler.WithJWTServiceService(jwtService),
+		handler.WithUserService(userService),
 		handler.WithOAuthService(oAuthService),
 		handler.WithTwoFAService(twoFAService),
 	)

@@ -7,6 +7,7 @@ import (
 )
 
 type Handler interface {
+	RegisterUser(c echo.Context) error
 }
 
 type Middleware interface {
@@ -25,7 +26,7 @@ func New(options ...func(*Router)) *echo.Echo {
 
 	e := echo.New()
 
-	//e.GET("/data", router.handler.GetData, router.middleware.Authorization)
+	e.POST("/register", router.handler.RegisterUser)
 
 	return e
 }
