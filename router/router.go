@@ -1,6 +1,7 @@
 package routing
 
 import (
+	"auth/validators"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -25,6 +26,8 @@ func New(options ...func(*Router)) *echo.Echo {
 	}
 
 	e := echo.New()
+
+	validators.RegisterValidators(e)
 
 	e.POST("/register", router.handler.RegisterUser)
 

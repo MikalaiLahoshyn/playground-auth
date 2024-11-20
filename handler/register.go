@@ -10,11 +10,11 @@ import (
 func (h *Handler) RegisterUser(c echo.Context) error {
 	var req models.RegisterRequest
 	if err := c.Bind(&req); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid input data"})
+		return c.JSON(http.StatusBadRequest, map[string]any{"error": "Invalid input data"})
 	}
 
 	if err := c.Validate(req); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]any{"error": "Validation failed"})
+		return c.JSON(http.StatusBadRequest, map[string]any{"message": "Validation failed", "error": err})
 	}
 
 	user := models.InsertUser{

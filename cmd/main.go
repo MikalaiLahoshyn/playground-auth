@@ -35,11 +35,16 @@ func main() {
 }
 
 func run(ctx context.Context) error {
-	// TODO: deploy in cloud (AWS)
-	// TODO: hook up cloud logging
 	// TODO: add swagger
 	// TODO: introduce CI/CD
+	// TODO: https and certificates
 
+	// TODO: error handling refactoring
+	// TODO: refactor dependancy tree (handler -> service -> repo)
+	// TODO: register echo validation
+
+	// TODO: deploy in cloud (AWS)
+	// TODO: hook up cloud logging
 	// TODO: move to k8s
 	// TODO: introduce terraform
 
