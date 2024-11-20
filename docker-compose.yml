@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: auth_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+      POSTGRES_DB: auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./seed/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - auth_network
+
+  redis:
+    image: redis:7
+    container_name: auth_redis
+    restart: always
+    command: ["redis-server", "--requirepass", "redis_password"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - auth_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  auth_network:
