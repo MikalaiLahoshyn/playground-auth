@@ -7,7 +7,6 @@ require go.uber.org/zap v1.27.0
 require (
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/labstack/echo v3.3.10+incompatible // indirect
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
@@ -36,6 +35,7 @@ require (
 require (
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
 	github.com/jmoiron/sqlx v1.4.0
+	github.com/labstack/echo v3.3.10+incompatible
 	github.com/spf13/viper v1.19.0
 	go.uber.org/multierr v1.10.0 // indirect
 )
