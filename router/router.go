@@ -17,13 +17,17 @@ type Router struct {
 	middleware Middleware
 }
 
-func New(options ...func(*Router)) *echo.Router {
+func New(options ...func(*Router)) *echo.Echo {
 	router := &Router{}
 	for _, option := range options {
 		option(router)
 	}
 
-	return nil
+	e := echo.New()
+
+	//e.GET("/data", router.handler.GetData, router.middleware.Authorization)
+
+	return e
 }
 
 func WithHandler(handler Handler) func(*Router) {
