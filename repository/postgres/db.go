@@ -21,10 +21,10 @@ const (
 // handlePostgresError handles postgres error and wraps it into corresponding entity error.
 func handlePostgresError(name string, err error) error {
 	if errors.Is(err, sql.ErrNoRows) {
-		return fmt.Errorf("[%s]: %w: %v", name, models.ErrNotFound, err.Error())
+		return fmt.Errorf("postgres error[%s]: %w: %v", name, models.ErrNotFound, err.Error())
 	}
 
-	return fmt.Errorf("[%s]: %w: %v", name, models.ErrInternal, err.Error())
+	return fmt.Errorf("postgres error[%s]: %w: %v", name, models.ErrInternal, err.Error())
 }
 
 func OpenDB(cfg configs.PostgresDatabase) (*sqlx.DB, error) {

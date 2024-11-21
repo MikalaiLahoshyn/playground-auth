@@ -23,10 +23,6 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 func RegisterValidators(e *echo.Echo) {
 	validate := validator.New()
 
-	_ = validate.RegisterValidation("required", required)
-	_ = validate.RegisterValidation("email", email)
-	_ = validate.RegisterValidation("min", min)
-	_ = validate.RegisterValidation("max", max)
 	_ = validate.RegisterValidation("strong_password", strongPassword)
 
 	e.Validator = &CustomValidator{validator: validate}

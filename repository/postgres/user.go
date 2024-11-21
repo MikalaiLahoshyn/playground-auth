@@ -18,9 +18,10 @@ func (r *Repository) InsertUser(ctx context.Context, user models.InsertUser) (in
 
 	defer func() { _ = tx.Rollback() }()
 
-	query := "INSERT INTO users(login, password_hash, name, surname) VALUES(?,?,?,?);"
+	query := "INSERT INTO users (login, password_hash, name, surname) VALUES ($1, $2, $3, $4) RETURNING id;"
 
-	result, err := tx.ExecContext(ctx, query, user.Login, user.Password, user.Name, user.Surname)
+	var id int
+	err = tx.QueryRowContext(ctx, query, user.Login, user.Password, user.Name, user.Surname).Scan(&id)
 	if err != nil {
 		return 0, fail(fmt.Errorf("failed to insert with context: %w", err))
 	}
@@ -30,10 +31,5 @@ func (r *Repository) InsertUser(ctx context.Context, user models.InsertUser) (in
 		return 0, fmt.Errorf("failed to commit transaction: %w", err)
 	}
 
-	id, err := result.LastInsertId()
-	if err != nil {
-		return 0, fail(fmt.Errorf("failed to fetch inserted user's id: %w", err))
-	}
-
-	return int(id), nil
+	return id, nil
 }

@@ -40,8 +40,7 @@ func run(ctx context.Context) error {
 	// TODO: https and certificates
 
 	// TODO: error handling refactoring
-	// TODO: refactor dependancy tree (handler -> service -> repo)
-	// TODO: register echo validation
+	// TODO: validation errors better output
 
 	// TODO: deploy in cloud (AWS)
 	// TODO: hook up cloud logging
