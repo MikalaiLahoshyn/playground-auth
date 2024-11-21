@@ -6,6 +6,7 @@ import (
 	"auth/logging"
 	"auth/middleware"
 	"auth/repository/postgres"
+	"auth/repository/redis"
 	routing "auth/router"
 	"auth/server"
 	"auth/service"
@@ -70,10 +71,20 @@ func run(ctx context.Context) error {
 		postgres.WithDB(db),
 	)
 
+	redisDb, err := redis.OpenDB(config.RedisDb)
+	if err != nil {
+		logger.Error("failed to connect to Redis: " + err.Error())
+		return err
+	}
+
+	redisRepo := redis.NewRepository(
+		redis.WithDB(redisDb),
+	)
+
 	userService := service.NewUserService(repo)
 	oAuthService := service.NewOAuthService(repo)
 	twoFAService := service.NewTwoFAService(repo)
-	tokenService := service.NewTokenService(repo)
+	tokenService := service.NewTokenService(repo, redisRepo)
 
 	middleware := middleware.NewMiddleware()
 

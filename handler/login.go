@@ -33,14 +33,24 @@ func (h *Handler) Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]any{"message": "Failed to check creds", "error": err.Error()})
 	}
 
-	token, err := h.tokenService.GenerateJWTToken(c.Request().Context(), *user)
+	accessToken, refreshToken, err := h.tokenService.GenerateJWTTokenPair(c.Request().Context(), *user)
 	if err != nil {
 		h.logger.Error("Failed to generate token", logging.Any("error", err))
 		return c.JSON(http.StatusBadRequest, map[string]any{"message": "Failed to generate token", "error": err.Error()})
 	}
 
+	// Set the refresh token in HTTP-only cookie
+	c.SetCookie(&http.Cookie{
+		Name:     "refresh_token",
+		Value:    refreshToken,
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   true,
+		MaxAge:   7 * 24 * 60 * 60, // 7 days
+	})
+
 	resp := models.LoginResponse{
-		Token: token,
+		Token: accessToken,
 	}
 
 	return c.JSON(http.StatusOK, map[string]any{"message": "Login completed", "token": resp})

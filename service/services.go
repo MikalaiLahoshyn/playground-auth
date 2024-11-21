@@ -10,7 +10,7 @@ type OAuthService interface{}
 type TwoFAService interface{}
 
 type TokenService interface {
-	GenerateJWTToken(ctx context.Context, user models.User) (string, error)
+	GenerateJWTTokenPair(ctx context.Context, user models.User) (string, string, error)
 }
 
 type UserService interface {

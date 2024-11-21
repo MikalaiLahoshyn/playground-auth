@@ -6,4 +6,8 @@ POSTGRES_DB:
   DB_PASSWORD: auth_password
   DB_NAME: auth_db
 
-
+REDIS_DB:
+  HOST: 127.0.0.1
+  PORT: 6379
+  PASSWORD: redis_password
+  DB: 0

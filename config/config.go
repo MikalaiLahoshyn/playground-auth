@@ -17,8 +17,16 @@ type PostgresDatabase struct {
 	Name     string `mapstructure:"DB_NAME"`
 }
 
+type RedisDatabase struct {
+	Host     string `mapstructure:"HOST"`
+	Port     string `mapstructure:"PORT"`
+	Password string `mapstructure:"PASSWORD"`
+	DB       int    `mapstructure:"DB"`
+}
+
 type Config struct {
 	PostgresDb PostgresDatabase `mapstructure:"POSTGRES_DB"`
+	RedisDb    RedisDatabase    `mapstructure:"REDIS_DB"`
 }
 
 func LoadConfig(path string) (Config, error) {
