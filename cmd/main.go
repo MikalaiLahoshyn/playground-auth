@@ -73,6 +73,7 @@ func run(ctx context.Context) error {
 	userService := service.NewUserService(repo)
 	oAuthService := service.NewOAuthService(repo)
 	twoFAService := service.NewTwoFAService(repo)
+	tokenService := service.NewTokenService(repo)
 
 	middleware := middleware.NewMiddleware()
 
@@ -81,6 +82,7 @@ func run(ctx context.Context) error {
 		handler.WithUserService(userService),
 		handler.WithOAuthService(oAuthService),
 		handler.WithTwoFAService(twoFAService),
+		handler.WithTokenService(tokenService),
 	)
 
 	router := routing.New(

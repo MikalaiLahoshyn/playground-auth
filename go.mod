@@ -44,6 +44,7 @@ require (
 
 require (
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/labstack/echo v3.3.10+incompatible

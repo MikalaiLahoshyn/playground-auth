@@ -9,6 +9,7 @@ import (
 
 type Handler interface {
 	RegisterUser(c echo.Context) error
+	Login(c echo.Context) error
 }
 
 type Middleware interface {
@@ -30,6 +31,7 @@ func New(options ...func(*Router)) *echo.Echo {
 	validators.RegisterValidators(e)
 
 	e.POST("/register", router.handler.RegisterUser)
+	e.POST("/login", router.handler.Login)
 
 	return e
 }

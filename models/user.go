@@ -1,6 +1,6 @@
 package models
 
-type InsertUser struct {
+type User struct {
 	Name     string
 	Surname  string
 	Login    string

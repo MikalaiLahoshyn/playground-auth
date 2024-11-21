@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func (r *Repository) InsertUser(ctx context.Context, user models.InsertUser) (int, error) {
+func (r *Repository) InsertUser(ctx context.Context, user models.User) (int, error) {
 	fail := func(err error) error {
 		return handlePostgresError("insert user", err)
 	}
@@ -32,4 +32,32 @@ func (r *Repository) InsertUser(ctx context.Context, user models.InsertUser) (in
 	}
 
 	return id, nil
+}
+
+func (r *Repository) GetUser(ctx context.Context, login string) (*models.User, error) {
+	fail := func(err error) error {
+		return handlePostgresError("get user", err)
+	}
+
+	tx, err := r.db.BeginTxx(ctx, nil)
+	if err != nil {
+		return nil, fail(fmt.Errorf("failed to begin a transaction: %w", err))
+	}
+
+	defer func() { _ = tx.Rollback() }()
+
+	query := "SELECT name, surname, login, password_hash FROM users WHERE login = $1;"
+
+	var user models.User
+	err = tx.QueryRowContext(ctx, query, login).Scan(&user.Name, &user.Surname, &user.Login, &user.Password)
+	if err != nil {
+		return nil, fail(fmt.Errorf("failed to select with context: %w", err))
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("failed to commit transaction: %w", err)
+	}
+
+	return &user, nil
 }

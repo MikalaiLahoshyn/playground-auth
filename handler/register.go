@@ -20,7 +20,7 @@ func (h *Handler) RegisterUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]any{"message": "Validation failed", "validation error": err.Error()})
 	}
 
-	user := &models.InsertUser{
+	user := &models.User{
 		Name:     req.Name,
 		Surname:  req.Surname,
 		Login:    req.Login,
